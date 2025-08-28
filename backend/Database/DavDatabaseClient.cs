@@ -129,6 +129,12 @@ public sealed class DavDatabaseClient(DavDatabaseContext ctx)
         }
     }
 
+    public async Task ClearHistoryAsync()
+    {
+        await Ctx.HistoryItems.ExecuteDeleteAsync();
+        await Ctx.SaveChangesAsync();
+    }
+
     private class FileSizeResult
     {
         public long TotalSize { get; init; }
