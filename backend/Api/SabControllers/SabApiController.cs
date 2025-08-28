@@ -8,6 +8,7 @@ using NzbWebDAV.Api.SabControllers.GetQueue;
 using NzbWebDAV.Api.SabControllers.GetVersion;
 using NzbWebDAV.Api.SabControllers.RemoveFromHistory;
 using NzbWebDAV.Api.SabControllers.RemoveFromQueue;
+using NzbWebDAV.Api.SabControllers.ClearHistory;
 using NzbWebDAV.Config;
 using NzbWebDAV.Database;
 using NzbWebDAV.Extensions;
@@ -77,6 +78,8 @@ public class SabApiController(
             case "queue":
                 return new GetQueueController(HttpContext, dbClient, queueManager, configManager);
 
+            case "history" when HttpContext.GetQueryParam("name") == "delete_all":
+                return new ClearHistoryController(HttpContext, dbClient, configManager);
             case "history" when HttpContext.GetQueryParam("name") == "delete":
                 return new RemoveFromHistoryController(HttpContext, dbClient, configManager);
             case "history":
